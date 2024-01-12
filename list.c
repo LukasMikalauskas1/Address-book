@@ -174,7 +174,6 @@ void delete_by_index(Address **head, int index)
 
         Address *temp = *head;
 
-        // Handle the case where the node to be deleted is the first node
         if (index == 0)
         {
                 *head = (*head)->next;
@@ -184,27 +183,22 @@ void delete_by_index(Address **head, int index)
 
         int counter = 0;
 
-        // Traverse to the node before the desired index
         while (temp != NULL && counter < index - 1)
         {
                 temp = temp->next;
                 counter++;
         }
 
-        // Check if the index is out of bounds
         if (temp == NULL || temp->next == NULL)
         {
                 printf("Index out of bounds or attempting to delete the last node!\n");
                 return;
         }
 
-        // Save the reference to the node to be deleted
         Address *node_to_delete = temp->next;
 
-        // Update the pointers to skip the node to be deleted
         temp->next = temp->next->next;
 
-        // Free the memory of the deleted node
         free(node_to_delete);
 }
 

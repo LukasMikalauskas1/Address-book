@@ -96,7 +96,7 @@ void exe_option(Address **list, int *option)
         Address *temp = NULL;
         int index = 0;
         char criteria[100];
-        char yn;
+        char yes_no;
 
         switch (*option)
         {
@@ -143,8 +143,8 @@ void exe_option(Address **list, int *option)
         }
 
         printf("Do you want to continue ? (y/n)\n");
-        scanf(" %c", &yn);
-        if (yn == 'y')
+        scanf(" %c", &yes_no);
+        if (yes_no == 'y')
         {
                 printf("--------------------------------------------------------------------------------\n");
                 print_list(*list, "Address book:");
