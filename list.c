@@ -33,18 +33,17 @@ void print_list(Address *head, char *header)
 
         while (current != NULL)
         {
-                printf("Nr. %d - %s %s %s %s\n", counter, current->name, current->surname, current->email, current->phone_num);
+                printf("Nr. %d - ", counter);
+                print_node(current);
                 current = current->next;
                 counter++;
         }
         printf("\n");
 }
 
-void print_node(Address *node, char *header)
+void print_node(Address *node)
 {
-        printf("%s\n", header);
-        printf("%s %s %s %s", node->name, node->surname, node->email, node->phone_num);
-        printf("\n\n");
+        printf("%s %s %s %s\n", node->name, node->surname, node->email, node->phone_num);
 }
 
 void load_initial_data(FILE *path, Address **head)
@@ -101,9 +100,9 @@ Address *create_node(char *name, char *surname, char *email, char *phone_num)
 
         temp = (Address *)malloc(sizeof(Address));
 
+        // Failed to allocate memory
         if (temp == NULL)
         {
-                printf("error - Failed to allocate memory in create_node()\n");
                 return NULL;
         }
 
@@ -116,18 +115,18 @@ Address *create_node(char *name, char *surname, char *email, char *phone_num)
         return temp;
 }
 
-void add_by_index(Address **head, Address *node, int index)
+int add_by_index(Address **head, Address *node, int index)
 {
         if (index < 0)
         {
-                printf("error - index must be greater or equal to 0\n");
-                return;
+                // error - index must be greater or equal to 0
+                return -1;
         }
         if (index == 0)
         {
                 node->next = *head;
                 *head = node;
-                return;
+                return 0;
         }
 
         Address *current = *head;
@@ -141,15 +140,17 @@ void add_by_index(Address **head, Address *node, int index)
 
         if (current == NULL)
         {
-                printf("error - Index out of bounds of the list\n");
-                return;
+                //"error - Index out of bounds of the list\n"
+                return -2;
         }
 
         node->next = current->next;
         current->next = node;
+
+        return 0;
 }
 
-void delete_all(Address **head)
+int delete_all(Address **head)
 {
         Address *current = *head;
         Address *next;
@@ -162,14 +163,16 @@ void delete_all(Address **head)
         }
 
         *head = NULL;
+
+        return 0;
 }
 
-void delete_by_index(Address **head, int index)
+int delete_by_index(Address **head, int index)
 {
         if (index < 0)
         {
-                printf("error - index must be greater or equal to 0\n");
-                return;
+                // error - index must be greater or equal to 0
+                return -1;
         }
 
         Address *temp = *head;
@@ -178,7 +181,7 @@ void delete_by_index(Address **head, int index)
         {
                 *head = (*head)->next;
                 free(temp);
-                return;
+                return 0;
         }
 
         int counter = 0;
@@ -191,8 +194,8 @@ void delete_by_index(Address **head, int index)
 
         if (temp == NULL || temp->next == NULL)
         {
-                printf("Index out of bounds or attempting to delete the last node!\n");
-                return;
+                // error - index out of bounds or attempting to delete the last node!
+                return -2;
         }
 
         Address *node_to_delete = temp->next;
@@ -200,6 +203,7 @@ void delete_by_index(Address **head, int index)
         temp->next = temp->next->next;
 
         free(node_to_delete);
+        return 0;
 }
 
 Address *get_by_index(Address **head, int index)
@@ -219,7 +223,7 @@ Address *get_by_index(Address **head, int index)
                 counter++;
         }
 
-        printf("error - node with %d index was not found\n", index);
+        // Node with the given index was not found
         return NULL;
 }
 
@@ -245,11 +249,11 @@ Address *get_by_criteria(Address **head, char *criteria)
                         temp->next = NULL;
 
                         add_to_end(&match_list, temp);
-                        printf("added a new node!\n");
                 }
 
                 current = current->next;
         }
 
+        // NULL if no matches where found
         return match_list;
 }
