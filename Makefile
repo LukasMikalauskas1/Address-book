@@ -1,8 +1,10 @@
 CC=gcc 
+#linux RM=rm -rf
+RM=del
 CFLAGS=-g
 
-OBJECTS:=main.o list.o interface.o
-CFILES:=main.c list.c interface.c
+CFILES:=$(wildcard *.c)
+OBJECTS:=$(patsubst %.c, %.o, $(CFILES))
 
 BIN=main
 
@@ -17,4 +19,4 @@ $(BIN): $(OBJECTS)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm -rf $(BIN) $(OBJECTS)
+	$(RM) $(BIN) $(OBJECTS)

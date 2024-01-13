@@ -21,8 +21,9 @@ typedef struct Address
  * @brief Function that adds a node to the end of the linked list
  * @param head double pointer to the start of the list
  * @param node a pointer to the node
+ * @return 0 - succses, -4 node = NULL
  */
-void add_to_end(Address **head, Address *node);
+int add_to_end(Address **head, Address *node);
 /*
  * @brief Function that adds a node to a certain position in the linked list
  * @param head double pointer to the start of the list
@@ -54,13 +55,12 @@ void print_list(Address *head, char *header);
 /*
  * @brief Function that prints a single node
  * @param node a pointer to a node
- * @param header line that is printed before the contents
  */
 void print_node(Address *node);
 /*
  * @brief Function that deletes the entire linked list
  * @param head double pointer to the start of the list
- * @return 0 - succsess
+ * @return 0 - succsess, -3 - list already empty
  */
 int delete_all(Address **head);
 /*

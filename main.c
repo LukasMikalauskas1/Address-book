@@ -10,12 +10,10 @@ Address *list = NULL;
 
 int main(void)
 {
-        int option = 0;
         signal(SIGINT, signal_handler);
 
-        load_address_book(&list);
-        select_option(&option);
-        exe_option(&list, &option);
+        //load_address_book(&list);
+        exe_address_book(&list);
 
         delete_all(&list);
 
@@ -24,7 +22,6 @@ int main(void)
 
 void signal_handler(int signal)
 {
-        printf("Cleaning up and terminating...\n");
         delete_all(&list);
         exit(0);
 }

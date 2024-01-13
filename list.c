@@ -6,14 +6,19 @@
 
 #define DELIMITER ","
 
-void add_to_end(Address **head, Address *node)
+int add_to_end(Address **head, Address *node)
 {
+        if(node == NULL)
+        {
+                return -4; // error - node was null
+        }
+
         Address *current = *head;
 
         if (current == NULL)
         {
                 *head = node;
-                return;
+                return 0;
         }
 
         while (current->next != NULL)
@@ -22,6 +27,7 @@ void add_to_end(Address **head, Address *node)
         }
 
         current->next = node;
+        return 0;
 }
 
 void print_list(Address *head, char *header)
@@ -48,7 +54,7 @@ void print_node(Address *node)
 
 void load_initial_data(FILE *path, Address **head)
 {
-        char line[128];
+        char line[200];
 
         while (fgets(line, sizeof(line), path))
         {
@@ -118,9 +124,8 @@ Address *create_node(char *name, char *surname, char *email, char *phone_num)
 int add_by_index(Address **head, Address *node, int index)
 {
         if (index < 0)
-        {
-                // error - index must be greater or equal to 0
-                return -1;
+        {      
+                return -1; //error - index < 0
         }
         if (index == 0)
         {
@@ -140,8 +145,8 @@ int add_by_index(Address **head, Address *node, int index)
 
         if (current == NULL)
         {
-                //"error - Index out of bounds of the list\n"
-                return -2;
+                
+                return -2; //error - out of bounds
         }
 
         node->next = current->next;
@@ -154,6 +159,11 @@ int delete_all(Address **head)
 {
         Address *current = *head;
         Address *next;
+
+        if(current == NULL)
+        {
+                return -3; // error - empty list
+        }
 
         while (current != NULL)
         {
@@ -170,12 +180,16 @@ int delete_all(Address **head)
 int delete_by_index(Address **head, int index)
 {
         if (index < 0)
-        {
-                // error - index must be greater or equal to 0
-                return -1;
+        {         
+                return -1; // error - index must be greater or equal to 0
         }
 
         Address *temp = *head;
+
+        if(temp == NULL)
+        {
+                return -3; // error - empty list
+        }
 
         if (index == 0)
         {
@@ -194,8 +208,7 @@ int delete_by_index(Address **head, int index)
 
         if (temp == NULL || temp->next == NULL)
         {
-                // error - index out of bounds or attempting to delete the last node!
-                return -2;
+                return -2; // error - index out of bounds or attempting to delete the last node!
         }
 
         Address *node_to_delete = temp->next;
@@ -203,6 +216,7 @@ int delete_by_index(Address **head, int index)
         temp->next = temp->next->next;
 
         free(node_to_delete);
+
         return 0;
 }
 
@@ -215,7 +229,7 @@ Address *get_by_index(Address **head, int index)
         while (current != NULL)
         {
                 if (counter == index)
-                {
+                {       
                         return current;
                 }
 
@@ -223,8 +237,8 @@ Address *get_by_index(Address **head, int index)
                 counter++;
         }
 
-        // Node with the given index was not found
-        return NULL;
+
+        return NULL; // Node with the given index was not found
 }
 
 Address *get_by_criteria(Address **head, char *criteria)
@@ -242,6 +256,11 @@ Address *get_by_criteria(Address **head, char *criteria)
                 {
                         temp = (Address *)malloc(sizeof(Address));
 
+                        if(temp == NULL)
+                        {
+                                return match_list; // NULL if failed to allocate memory
+                        }
+
                         strcpy(temp->name, current->name);
                         strcpy(temp->surname, current->surname);
                         strcpy(temp->email, current->email);
@@ -253,7 +272,5 @@ Address *get_by_criteria(Address **head, char *criteria)
 
                 current = current->next;
         }
-
-        // NULL if no matches where found
-        return match_list;
+        return match_list;  // NULL if no matches where found
 }
