@@ -12,9 +12,8 @@ int main(void)
 {
         signal(SIGINT, signal_handler);
 
-        //load_address_book(&list);
+        load_address_book(&list);
         exe_address_book(&list);
-
         delete_all(&list);
 
         return 0;
@@ -23,5 +22,5 @@ int main(void)
 void signal_handler(int signal)
 {
         delete_all(&list);
-        exit(0);
+        exit(1);
 }

@@ -1,6 +1,5 @@
 CC=gcc 
-#linux RM=rm -rf
-RM=del
+RM=rm -rf
 CFLAGS=-g
 
 CFILES:=$(wildcard *.c)
