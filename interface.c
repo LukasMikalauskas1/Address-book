@@ -6,6 +6,8 @@
 #include "list.h"
 #include "interface.h"
 
+#define HOME "HOME"
+
 void select_action(int *action)
 {
         printf("SELECT ACTION:\n");
