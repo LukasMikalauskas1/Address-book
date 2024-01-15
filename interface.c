@@ -59,64 +59,76 @@ Address *input_address()
 
 void exe_address_book(Address **list)
 {
-        //Variable for execution:
+        // Variable for execution:
         int start = 1;
         int response;
         int index;
         int action;
         char criteria[100];
+        Address *temp = NULL;
 
-        while(1)
-        {   
-            printf("--------------------------------------------------------\n");
-            print_list(*list, "ADDRESS BOOK (Position nr.|Address):");
-            printf("--------------------------------------------------------\n");
-            action = 0;
-            select_action(&action);
-            switch (action)
-            {
-            case 1: //Add to end
-                    response = add_to_end(list, input_address());
-                    response_header();
-                    response_handler(&response, "added to the end of the list");
-                    break;
-            case 2: // Add by index
-                    printf("Type in the position: ");
-                    input_integer(&index);
-                    response = add_by_index(list, input_address(), index);
-                    response_header();
-                    response_handler(&response, "added new address");
-                    break;
-            case 3: // Get by index 
-                    printf("Type in the position: ");
-                    input_integer(&index);
-                    response_header();
-                    get_address_by_index(list, index);
-                    break;
-            case 4: // Get by criteria 
-                    input_criteria(criteria);
-                    response_header();
-                    get_address_by_criteria(list, criteria);
-                    break;
-            case 5: // Delete at index
-                    printf("Type in the position: ");
-                    input_integer(&index);
-                    response_header();
-                    response = delete_by_index(list, index);
-                    response_handler(&response, "address deleted");
-                    break;
-            case 6: // Delete all
-                    response_header();
-                    response = delete_all(list);
-                    response_handler(&response, "address book deleted");
-                    break;
-            case 7:
-                    return;
-            default: // Wrong input
-                    response_header();
-                    printf("Error: action dosent exist\n\n");
-                    break;
-            }
+        while (1)
+        {
+                printf("--------------------------------------------------------\n");
+                print_list(*list, "ADDRESS BOOK (Position nr.|Address):");
+                printf("--------------------------------------------------------\n");
+                action = 0;
+                select_action(&action);
+                switch (action)
+                {
+                case 1: // Add to end
+                        temp = input_address();
+                        response = add_to_end(list, temp);
+                        response_header();
+                        response_handler(&response, "added to the end of the list");
+                        if (response != 0)
+                        {
+                                free(temp);
+                        }
+
+                        break;
+                case 2: // Add by index
+                        temp = input_address();
+                        printf("Type in the position: ");
+                        input_integer(&index);
+                        response = add_by_index(list, temp, index);
+                        response_header();
+                        response_handler(&response, "added new address");
+                        if (response != 0)
+                        {
+                                free(temp);
+                        }
+                        break;
+                case 3: // Get by index
+                        printf("Type in the position: ");
+                        input_integer(&index);
+                        response_header();
+                        get_address_by_index(list, index);
+                        break;
+                case 4: // Get by criteria
+                        input_criteria(criteria);
+                        response_header();
+                        get_address_by_criteria(list, criteria);
+                        break;
+                case 5: // Delete at index
+                        printf("Type in the position: ");
+                        input_integer(&index);
+                        response_header();
+                        response = delete_by_index(list, index);
+                        response_handler(&response, "address deleted");
+                        break;
+                case 6: // Delete all
+                        response_header();
+                        response = delete_all(list);
+                        response_handler(&response, "address book deleted");
+                        break;
+                case 7:
+                        return;
+                default: // Wrong input
+                        response_header();
+                        printf("Error: action dosent exist\n\n");
+                        break;
+                }
         }
 }
 
@@ -144,11 +156,11 @@ void response_handler(int *response, char *message)
 
 void input_integer(int *num)
 {
-        while(1)
+        while (1)
         {
-                if(scanf("%d", num) == 1)
+                if (scanf("%d", num) == 1)
                 {
-                        flush_stdin(); 
+                        flush_stdin();
                         printf("\n");
                         break;
                 }
@@ -172,7 +184,8 @@ void input_criteria(char criteria[100])
 void flush_stdin()
 {
         int c;
-        while ((c = getchar()) != '\n' && c != EOF);
+        while ((c = getchar()) != '\n' && c != EOF)
+                ;
 }
 
 void response_header()
@@ -184,7 +197,7 @@ void response_header()
 void get_address_by_index(Address **list, int index)
 {
         Address *temp = get_by_index(list, index);
-        if(temp == NULL)
+        if (temp == NULL)
         {
                 printf("Address dosent exist!\n\n");
                 return;
@@ -196,14 +209,13 @@ void get_address_by_index(Address **list, int index)
 void get_address_by_criteria(Address **list, char *criteria)
 {
         Address *temp = get_by_criteria(list, criteria);
-        if(temp == NULL)
+        if (temp == NULL)
         {
                 printf("Address dosent exist!\n\n");
                 return;
         }
         print_list(temp, "Address that matched the criteria:\n");
 }
-
 
 void load_address_book(Address **list)
 {
