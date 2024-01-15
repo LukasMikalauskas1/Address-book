@@ -60,7 +60,6 @@ Address *input_address()
 void exe_address_book(Address **list)
 {
         // Variable for execution:
-        int start = 1;
         int response;
         int index;
         int action;
