@@ -241,7 +241,6 @@ void load_address_book(Address **list)
         if (initial_data != NULL)
         {
                 load_initial_data(initial_data, list);
-                print_list(*list, "Address book:");
                 fclose(initial_data);
         }
         else
