@@ -10,9 +10,11 @@
 
 void select_action(int *action)
 {
+        printf("--------------------------------------------------------\n");
         printf("SELECT ACTION:\n");
+        printf("0 - Display address book\n");
         printf("1 - Add new address (to the end)\n");
-        printf("2 - Incert new address\n");
+        printf("2 - Insert new address\n");
         printf("3 - Find address by position\n");
         printf("4 - Find address by criteria\n");
         printf("5 - Delete address by position\n");
@@ -68,13 +70,14 @@ void exe_address_book(Address **list)
 
         while (1)
         {
-                printf("--------------------------------------------------------\n");
-                print_list(*list, "ADDRESS BOOK (Position nr.|Address):");
-                printf("--------------------------------------------------------\n");
                 action = 0;
                 select_action(&action);
                 switch (action)
                 {
+                case 0:
+                        printf("--------------------------------------------------------\n");
+                        print_list(*list, "ADDRESS BOOK:\n");
+                        break;
                 case 1: // Add to end
                         temp = input_address();
                         response = add_to_end(list, temp);
@@ -214,6 +217,7 @@ void get_address_by_criteria(Address **list, char *criteria)
                 return;
         }
         print_list(temp, "Address that matched the criteria:\n");
+        free(temp);
 }
 
 void load_address_book(Address **list)
