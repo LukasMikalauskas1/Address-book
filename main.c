@@ -22,5 +22,6 @@ int main(void)
 void signal_handler(int signal)
 {
         delete_all(&list);
+        clean_up();
         exit(1);
 }

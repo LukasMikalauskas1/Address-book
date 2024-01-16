@@ -24,13 +24,14 @@ void select_action(int *action)
         input_integer(action);
 }
 
+Address *input = NULL;
 Address *input_address()
 {
-        Address *temp = NULL;
-        temp = (Address *)malloc(sizeof(Address));
+        //Address *temp = NULL;
+        input = (Address *)malloc(sizeof(Address));
 
         // returns null if memory allocation fails
-        if (temp == NULL)
+        if (input == NULL)
         {
                 return NULL;
         }
@@ -38,25 +39,30 @@ Address *input_address()
         printf("Type in the data for a new address:\n");
 
         printf("Type in the name:");
-        scanf("%50s", temp->name);
+        scanf("%50s", input->name);
         flush_stdin();
 
         printf("Type in the surname:");
-        scanf("%50s", temp->surname);
+        scanf("%50s", input->surname);
         flush_stdin();
 
         printf("Type in the email:");
-        scanf("%100s", temp->email);
+        scanf("%100s", input->email);
         flush_stdin();
 
         printf("Type in the phone number:");
-        scanf("%20s", temp->phone_num);
+        scanf("%20s", input->phone_num);
         flush_stdin();
 
-        temp->next = NULL;
+        input->next = NULL;
         printf("\n");
 
-        return temp;
+        return input;
+}
+
+void clean_up()
+{
+        free(input);
 }
 
 void exe_address_book(Address **list)

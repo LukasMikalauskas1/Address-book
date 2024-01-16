@@ -15,4 +15,6 @@ void get_address_by_index(Address **list, int index);
 void get_address_by_criteria(Address **list, char *criteria);
 void load_address_book(Address **list);
 
+void clean_up();
+
 #endif
