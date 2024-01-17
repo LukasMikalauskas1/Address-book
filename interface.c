@@ -27,7 +27,7 @@ void select_action(int *action)
 Address *input = NULL;
 Address *input_address()
 {
-        //Address *temp = NULL;
+        // Address *temp = NULL;
         input = (Address *)malloc(sizeof(Address));
 
         // returns null if memory allocation fails
@@ -223,7 +223,7 @@ void get_address_by_criteria(Address **list, char *criteria)
                 return;
         }
         print_list(temp, "Address that matched the criteria:\n");
-        free(temp);
+        delete_all(&temp);
 }
 
 void load_address_book(Address **list)
