@@ -17,7 +17,7 @@ build:
 	$(MAKE) -C src all
 
 install: buildall
-	sudo cp -f $(LIB_DIR)/lib$(LIB_NAME).so /usr/lib
+	sudo install -m 644 $(LIB_DIR)/lib$(LIB_NAME).so /usr/lib
 
 uninstall: clean
 	sudo rm -f /usr/lib/lib$(LIB_NAME).so
