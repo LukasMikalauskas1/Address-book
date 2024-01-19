@@ -26,4 +26,4 @@ clean:
 	$(MAKE) -C lib clean
 	rm -rf $(BIN) $(BUILD_DIR)
 
-.PHONY: all clean
+.PHONY: build buildall clean install uninstall
